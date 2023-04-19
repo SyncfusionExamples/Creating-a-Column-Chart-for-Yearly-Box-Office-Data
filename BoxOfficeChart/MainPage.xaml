@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:local="clr-namespace:BoxOfficeChart" 
+             x:Class="BoxOfficeChart.MainPage" Padding="10" BackgroundColor="#46A0FF">
+
+
+    <ContentPage.BindingContext>
+        <local:YearlyBoxOffice />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <local:ImageConverter x:Key="imageConverter" />
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Border BackgroundColor="White" Stroke="#BEB1AE" Margin="10" Padding="10">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="30" />
+            </Border.StrokeShape>
+            <chart:SfCartesianChart Margin="10" BackgroundColor="White">
+                <chart:SfCartesianChart.Title>
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label HorizontalOptions="Start" Margin="20,0,0,0"  Grid.Column="0" Text="Since 1977 USA Yearly Box Office Revenue" FontSize="14" />
+                        <VerticalStackLayout HorizontalOptions="End" Margin="40,0,40,0" Grid.Column="1">
+                            <Label Text="{Binding SelectedYear.TotalGross, StringFormat='${0:###,###,###}'}" FontAttributes="Bold" FontSize="{OnIdiom 12, Phone=12, Tablet=20, Desktop=20}" >
+                                
+                            </Label>
+                            <Border StrokeThickness="0"   HorizontalOptions="End" >
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="5" />
+                                </Border.StrokeShape>
+                                <Grid ColumnDefinitions="Auto,Auto" BackgroundColor="#80BEB1AE" >
+                                    <Image Grid.Column="0" Margin="4" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" HorizontalOptions="Center"
+                                    Source="{Binding SelectedYear.GrossLastYearDelta,
+                                    Converter={StaticResource imageConverter}}" />
+                                    <Label VerticalTextAlignment="Center" Margin="4" Grid.Column="1" Text="{Binding SelectedYear.GrossLastYearDelta, StringFormat='{0:0.###}%'}" FontSize="{OnIdiom 12, Phone=10, Tablet=16, Desktop=16}" >
+                                    </Label>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Grid>
+                </chart:SfCartesianChart.Title>
+                <chart:SfCartesianChart.XAxes>
+                    <chart:CategoryAxis ZoomFactor="0.24" ZoomPosition="0.76" ShowMajorGridLines="False" LabelPlacement="BetweenTicks">
+                        <chart:CategoryAxis.MajorTickStyle>
+                            <chart:ChartAxisTickStyle  TickSize="0"/>
+                        </chart:CategoryAxis.MajorTickStyle>
+                        <chart:CategoryAxis.AxisLineStyle>
+                            <chart:ChartLineStyle  StrokeWidth="0"/>
+                        </chart:CategoryAxis.AxisLineStyle>
+                    </chart:CategoryAxis>
+                </chart:SfCartesianChart.XAxes>
+
+                <chart:SfCartesianChart.YAxes>
+                    <chart:NumericalAxis  ShowMajorGridLines="False" IsVisible="False" RangePadding="AppendInterval" >
+                    </chart:NumericalAxis>
+                </chart:SfCartesianChart.YAxes>
+                <chart:SfCartesianChart.ZoomPanBehavior>
+                    <chart:ChartZoomPanBehavior EnablePinchZooming="False" EnableDoubleTap="False" EnablePanning="True" />
+                </chart:SfCartesianChart.ZoomPanBehavior>
+                <!--Initialize the series for chart-->
+                <chart:ColumnSeries CornerRadius="100,100,0,0" Fill="#F7CB05" 
+                                ShowDataLabels="True"
+                                ItemsSource="{Binding RevenueCollection}" 
+                                XBindingPath="Year"
+                                YBindingPath="TotalGrossInBillion">
+<chart:ColumnSeries.SelectionBehavior>
+    <chart:DataPointSelectionBehavior SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" SelectionBrush="#BEB1AE" />
+</chart:ColumnSeries.SelectionBehavior>
+                    <chart:ColumnSeries.DataLabelSettings>
+                        <chart:CartesianDataLabelSettings  >
+                            <chart:CartesianDataLabelSettings.LabelStyle>
+                                <chart:ChartDataLabelStyle LabelPadding="10" LabelFormat="$###.#B" />
+                            </chart:CartesianDataLabelSettings.LabelStyle>
+                        </chart:CartesianDataLabelSettings>
+                    </chart:ColumnSeries.DataLabelSettings>
+                </chart:ColumnSeries>
+            </chart:SfCartesianChart>
+        </Border>
+    </ContentPage.Content>
+
+
+</ContentPage>
