@@ -28,7 +28,7 @@
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Label HorizontalOptions="Start" Margin="20,0,0,0"  Grid.Column="0" Text="Since 1977 USA Yearly Box Office Revenue" FontSize="14" />
+                        <Label HorizontalOptions="Start" Margin="20,0,0,0"  Grid.Column="0" Text="USA Yearly Box Office Revenue Since 1977" FontSize="14" />
                         <VerticalStackLayout HorizontalOptions="End" Margin="40,0,40,0" Grid.Column="1">
                             <Label Text="{Binding SelectedYear.TotalGross, StringFormat='${0:###,###,###}'}" FontAttributes="Bold" FontSize="{OnIdiom 12, Phone=12, Tablet=20, Desktop=20}" >
                                 
